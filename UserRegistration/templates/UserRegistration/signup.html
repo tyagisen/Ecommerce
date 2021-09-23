@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="p-1 m-1">
+        <div class="col-lg-5 mx-auto border rounded pt-4">
+            <h3 class="alert alert-light border rounded">Create an Account</h3>
+            {% for messages in messages %}
+            {% if messages %}
+            <div class="alert alert-{{messages.tags}}" role="alert">
+                {{messages}}
+            </div>
+            {% endif %}
+            {% endfor %}
+            <form action="" method="POST" novalidate>
+                {% csrf_token %}
+                {% for form in form %}
+                {{form.label_tag}}
+                {{form}}
+                <small style="color:red;">{{form.errors|striptags}}</small><br>
+                {% endfor %}
+                <input type="submit" value="Create Account" class="btn btn-primary mb-3"><br>
+
+                {% for message in messages %}
+
+                {% endfor%}
+                Have an Account?<a href="{% url 'login' %}"> <u>Login</u></a>
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'inventory/navbar.html' %}
+<div class="content-wrapper mt-3">
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <form action="" method="POST">
+                {% csrf_token %}
+                {% for form in form %}
+                {{form.label_tag}}
+                {{form}}
+                {{form.errors|striptags}}<br>
+                {% endfor %}
+                <input type="submit" class="btn btn-primary" value="Add To Shop">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

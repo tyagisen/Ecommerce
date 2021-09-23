@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load product_cart %}
+{% load custom_filter %}
+<div class="container">
+    <h3>Your Order</h3>
+    <table class="table bg-info">
+
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Product Image</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in product %}
+
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{product.product_name}}</td>
+            <td><img src="{{product.product_image.url}}" style="height:80px;" class="rounded-circle" alt=""></td>
+            <td>{{product|price_after_discount:request.session.cart|currency}}</td>
+            <td>{{product|cart_count:request.session.cart}}</td>
+            <td>{{product|product_total:request.session.cart|currency}}</td>
+        </tr>
+        {% endfor %}
+
+        <tr>
+
+
+            <th colspan="5">Grand Total</th>
+            <th>{{product|total_cart_price:request.session.cart|currency}}</th>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {% for product in product %}
+        <input type="text" hidden name="product_name" value="{{product.product_name}}">
+        <input type="text" hidden name="price_per_product"
+               value="{{product|price_after_discount:request.session.cart}}">
+        <input hidden type="text" name="product_quantity" value="{{product|cart_count:request.session.cart}}"
+        >
+        <input hidden type="text" name="total_product_price"
+               value="{{product|product_total:request.session.cart}}">
+        {% endfor %}
+        <input type="submit" value="Sell Now" class="btn btn-primary">
+
+    </form>
+</div>
+{% endblock %}

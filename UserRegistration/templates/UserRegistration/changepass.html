@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="p-4 m-4">
+        <div class="col-lg-5 mx-auto border rounded pt-4">
+            <h3 class="alert alert-light border rounded">Change Password</h3>
+            <form action="" method="POST" novalidate>
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                {{error}}<br>
+                {% endfor %}
+                {% endif %}
+                {% for form in form %}
+                {{form.label_tag}}
+                {{form}}<br>
+                <small class="text-danger">
+                    {{form.errors|striptags}}
+                </small>
+                <br>
+                {% endfor %}
+                {% for messages in messages %}
+                {% if messages %}
+                <div class="alert alert-{{messages.tags}}" role="alert">
+                    {{messages}}
+                </div>
+                {% endif %}
+                {% endfor %}
+                <input type="submit" value="Change" class="btn btn-info">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

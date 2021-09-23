@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'inventory/navbar.html' %}
+
+<div class="content-wrapper mt-3">
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Add Product</h2><span class="btn btn-close bg-white" data-dismiss="modal"
+                                                      aria-label="Close"><i
+                                class="fa fa-times-circle fa-lg"></i></span>
+
+                        </div>
+
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                {% include 'inventory/filling_form.html' %}
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-primary fas fa-plus-circle" value="Add Product">
+
+
+                                <button class="btn btn-danger" data-dismiss="modal"><i
+                                        class="fa fa-times-circle pr-1"></i>Close
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+
+            <div class="card card-primary card-outline">
+                <div class="card-header">
+                    {% if request.user.is_superuser %}
+                    <h3 class="card-title"><b>Investment
+                        Made: {{amount}} </b></h3>
+                    {% endif %}
+                    <div class="card-tools">
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" placeholder="Search Products">
+                            <div class="input-group-append">
+                                <div class="btn btn-primary">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="mailbox-controls">
+                        <!-- Check all button -->
+                        <div class="btn-group">
+                            <a href="" data-toggle="modal" class="btn btn-primary mr-3" data-target="#myModal"><i
+                                    class="fa fa-plus-circle fa-lg pr-1"></i>Add
+                                Product</a>
+                            <a href="{% url 'dealer' %}" class="btn btn-primary"><i
+                                    class="fa fa-user fa-lg pr-1"></i> Add Dealer
+                            </a>
+
+                        </div>
+
+                        <div class="float-right">
+                            1-50/200
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-sm"><i
+                                        class="fas fa-chevron-left"></i>
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm"><i
+                                        class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                            <!-- /.btn-group -->
+                        </div>
+                        <!-- /.float-right -->
+                    </div>
+                    <div class="table-responsive mailbox-messages">
+                        <table class="table table-hover table-striped">
+
+                            <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Total Product</th>
+                                <th scope="col">ReOrder Level</th>
+                                <th scope="col">Purchase Price</th>
+                                <th scope="col">Selling Price</th>
+                                <th scope="col">Discount Percent</th>
+                                <th scope="col">Product Image</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for product in product%}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{product.product_name}}</td>
+                                {% if product.total_product <= product.reorder_level %}
+                                <td class="bg-danger"><a
+                                        href="{% url 'receive' product.id %}">{{product.total_product}}</a></td>
+                                {% else %}
+                                <td><a href="{% url 'receive' product.id %}">{{product.total_product}}</a></td>
+                                {% endif %}
+                                <td><a href="{% url 'reorder' product.id %}">{{product.reorder_level}}</a></td>
+                                <td>{{product.purchase_price}}</td>
+                                <td>{{product.selling_price}}</td>
+                                <td>{{product.discount_percent}}</td>
+                                <td><a href=""><img src="{{product.product_image.url}}"
+                                                    height="40px"
+                                                    alt=""></a></td>
+                                <td><a href="{% url 'receive' product.id %}"
+                                       class="btn btn-primary">Issue Item</a>
+                                </td>
+                                <td><a href="{% url 'delete_product' product.id %}"
+                                       class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <!-- /.table -->
+                    </div>
+                    <!-- /.mail-box-messages -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

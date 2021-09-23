@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'inventory/navbar.html' %}
+<div class="content-wrapper">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    {{forms.name.label_tag}}
+                    {{forms.name}}
+                </div>
+                <div class="col-lg-6">
+                    {{forms.email.label_tag}}
+                    {{forms.email}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    {{forms.phone.label_tag}}
+                    {{forms.phone}}
+                </div>
+                <div class="col-6">
+                    {{forms.phone2.label_tag}}
+                    {{forms.phone2}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    {{forms.address.label_tag}}
+                    {{forms.address}}
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="submit" class="btn btn-primary fas fa-plus-circle" value="Add Dealer">
+
+
+            <button class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle pr-1"></i>Close
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

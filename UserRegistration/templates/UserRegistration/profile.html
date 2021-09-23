@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load custom_filter %}
+<div class="container">
+    <div class="">
+        {% if users != None %}
+        <h3>List of Users</h3>
+        {% for user in users %}
+        <tr>
+
+
+            <td class="col-md-6"><a href="{% url 'detail' user.pk %}">{{user.username}}</a></td>
+            <br>
+        </tr>
+        {% endfor %}
+        {% endif %}
+        <div class=" mx-auto border rounded pt-4">
+            <h3 class="alert alert-light border rounded">Profile</h3>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" value="Save">
+                <a href="{% url 'logout' %}">Logout</a>
+                {% for messages in messages %}
+                {% if messages %}
+                <div class="alert alert-{{messages.tags}}" role="alert">
+                    {{messages}}
+                </div>
+                {% endif %}
+                {% endfor %}
+
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

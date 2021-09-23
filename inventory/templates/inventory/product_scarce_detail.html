@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'inventory/navbar.html' %}
+
+<div class="content-wrapper mt-3">
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h5 class="card-text bg-danger">Update Product</h5>
+
+                    <p>{{dealer.name}}</p>
+
+                    <p>{{products.product_name}} in store is only {{products.total_product}} Remain <a
+                            href="{% url 'add_product' %}">Update it</a></p>
+                </div>
+                <div class="card-body"><b>
+                    <h5 class="card-text bg-danger">Contact Information for dealer</h5>
+                    <p class="card-text">Dealer Name: {{products.dealer.name}}</p>
+                    <p class="card-text">Phone Number: {{products.dealer.phone}} {% if products.dealer.phone2 %},
+                        {{products.dealer.phone2}}{% endif %}</p>
+                    <p class="card-text">Email: <a href="/www.gmail.com/">{{products.dealer.email}}</a></p>
+                </b>
+                </div>
+                <div class="card-footer text-muted">
+                    2 days ago
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% include 'inventory/navbar.html' %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+
+
+                        <div class="card-tools">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control" placeholder="Search Products">
+                                <div class="input-group-append">
+                                    <div class="btn btn-primary">
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="mailbox-controls">
+                            <!-- Check all button -->
+                            <h3 class="card-title">Sold Amounts: {{new_total}}</h3>
+                            <!-- /.btn-group -->
+
+                            <div class="float-right">
+                                1-50/200
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-sm"><i
+                                            class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-sm"><i
+                                            class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <!-- /.btn-group -->
+                            </div>
+                            <!-- /.float-right -->
+                        </div>
+                        <div class="table-responsive mailbox-messages">
+                            <table class="table table-hover table-striped">
+
+                                <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Total Product</th>
+                                    <th scope="col">Sold Product Price</th>
+                                    <th scope="col">Total Amount</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+
+                                {% for product in products %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{product.sold_product_name}}</td>
+                                    <td>{{product.sold_product_quantity}}</td>
+                                    <td>{{product.sold_product_price_per_product}}</td>
+                                    <td>{{product.sold_product_price}}</td>
+                                    {% if request.user.is_superuser %}
+                                    <td><a href="{% url 'delete_product' product.id %}" type="button"
+                                           class="btn btn-default btn-sm bg-danger"><i
+                                            class="far fa-trash-alt"></i></a>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <!-- /.table -->
+                        </div>
+                        <!-- /.mail-box-messages -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

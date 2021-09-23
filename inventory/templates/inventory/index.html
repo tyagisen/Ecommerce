@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="wrapper">
+    <!-- Navbar -->
+    {% include 'inventory/navbar.html' %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <a href="{% url 'order' %}">
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>New Orders</h3>
+
+                                    <p>Details</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
+                                <a href="{% url 'order' %}" class="small-box-footer">Info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-3 col-6">
+
+                        <a href="{% url 'staffs' %}">
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3>Staffs</h3>
+
+                                    <p>Details</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                                <a href="{% url 'staffs' %}" class="small-box-footer">Info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <a href="{% url 'sell' %}">
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>Sold Inventory</h3>
+
+                                    <p>Details</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                                <a href="{% url 'sell' %}" class="small-box-footer">Info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- ./col -->
+                </div>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+{% endblock content %}
+

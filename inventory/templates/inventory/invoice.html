@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load product_cart %}
+{% load custom_filter %}
+{% block content %}
+{% include 'inventory/navbar.html' %}
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Invoice</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Invoice</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+
+
+                    <!-- Main content -->
+                    <div class="invoice p-3 mb-3">
+                        <!-- title row -->
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>
+                                    <i class="fas fa-globe"></i>
+                                    <small class="float-right">Date: 2/10/2014</small>
+                                </h4>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+
+                        <!-- Table row -->
+                        <div class="row">
+                            <div class="col-12 table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Product</th>
+                                        <th>Image</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>SubTotal</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for product in product %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{product.product_name}}</td>
+                                        <td><img src="{{product.product_image.url}}" style="height:80px;"
+                                                 class="rounded-circle" alt=""></td>
+                                        <td>{{product|price_after_discount:request.session.cart|currency}}</td>
+                                        <td>{{product|cart_count:request.session.cart}}</td>
+                                        <td>{{product|product_total:request.session.cart|currency}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+
+                        <div class="row">
+                            <!-- accepted payments column -->
+                            <div class="col-6">
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-6">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tr>
+                                            <th>Total:</th>
+                                            <td>{{product|total_cart_price:request.session.cart|currency}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+
+                        <!-- this row will not appear when printing -->
+                        <div class="row no-print">
+                            <div class="col-12">
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+                                    {% if in_group or request.user.is_superuser %}
+
+                                    <a href=""></a>
+                                    <button type="submit" class="btn btn-primary float-right"
+                                            style="margin-right: 5px;">
+                                        <i class="fas fa-download"></i> Sell Now
+                                    </button>
+                                    {% else %}
+                                    <a href="{% url 'customer_order' %}" class="btn btn-primary float-right"
+                                       style="margin-right: 5px;">
+                                        <i class="fas fa-download"></i> Order Now</a>
+
+                                    {% endif %}
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.invoice -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+</aside>
+{% endblock %}
